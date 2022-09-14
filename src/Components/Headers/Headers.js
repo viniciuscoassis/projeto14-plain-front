@@ -31,6 +31,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   padding: 0 15px;
   position: relative;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
 
   div:nth-child(4) {
     background-color: black;
