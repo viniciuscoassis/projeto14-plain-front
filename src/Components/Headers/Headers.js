@@ -9,7 +9,7 @@ export default function Headers({ cartQuantity }) {
         <MenuOutline color={"#00000"} title="menu" height="30px" width="30px" />
       </div>
       <div>
-        <img src={logo} />
+        <img src={logo} alt="logo" />
       </div>
       <div>
         <BagHandleOutline

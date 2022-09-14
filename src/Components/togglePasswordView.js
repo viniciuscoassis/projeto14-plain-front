@@ -16,7 +16,7 @@ export default function TogglePasswordView({
       top={top}
       right={right}
     >
-      <img src={passwordShown ? noeye : eye} />
+      <img src={passwordShown ? noeye : eye} alt="password visibility" />
     </Wrapper>
   );
 }

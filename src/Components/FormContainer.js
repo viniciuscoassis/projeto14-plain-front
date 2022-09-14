@@ -1,6 +1,6 @@
 import styled from "styled-components";
-export default function FormContainer({ children }) {
-  return <Wrapper>{children}</Wrapper>;
+export default function FormContainer({ children, onSubmit }) {
+  return <Wrapper onSubmit={onSubmit}>{children}</Wrapper>;
 }
 
 const Wrapper = styled.form`
@@ -8,6 +8,7 @@ const Wrapper = styled.form`
   flex-direction: column;
   align-items: center;
   position: relative;
+
   input {
     height: 40px;
     width: 80vw;
@@ -17,5 +18,6 @@ const Wrapper = styled.form`
   button {
     height: 40px;
     width: 80vw;
+    margin-bottom: 20px;
   }
 `;
