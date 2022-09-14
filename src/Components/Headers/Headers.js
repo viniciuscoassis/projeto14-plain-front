@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MenuOutline, BagHandleOutline } from "react-ionicons";
 import logo from "../../assets/img/logo.svg";
 import { Link } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
@@ -87,6 +86,7 @@ const Wrapper = styled.div`
     top: 0;
     left: -100%;
     transition: 850ms;
+    z-index: 1000;
   }
 
   .nav-menu.active {

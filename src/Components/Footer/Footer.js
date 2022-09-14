@@ -6,9 +6,9 @@ import Twitter from "../../assets/img/twitter.svg";
 export default function Footer() {
   return (
     <Container>
-      <img src={Face} />
-      <img src={Insta} />
-      <img src={Twitter} />
+      <img src={Face} alt="facebook" />
+      <img src={Insta} alt="instagram" />
+      <img src={Twitter} alt="twitter" />
     </Container>
   );
 }
