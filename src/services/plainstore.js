@@ -17,3 +17,5 @@ function createHeaders() {
   const config = { headers: { Authorization: `Bearer ${auth}` } };
   return config;
 }
+
+export { postLogin, postSignUp };

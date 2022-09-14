@@ -3,16 +3,24 @@ import styled from "styled-components";
 import FormContainer from "../FormContainer.js";
 import { useState } from "react";
 import TogglePasswordView from "../togglePasswordView.js";
+import { postSignUp } from "../../services/plainstore.js";
 
 export default function AuthScreen() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
-  const [signUpForm, setSignUpForm] = useState({
+  const emptySignUp = {
+    name: "",
     email: "",
     password: "",
     confirm_password: "",
-    name: "",
-  });
+  };
+
+  const emptyLogin = {
+    email: "",
+    password: "",
+  };
+
+  const [isLogin, setIsLogin] = useState(true);
+  const [loginForm, setLoginForm] = useState(emptyLogin);
+  const [signUpForm, setSignUpForm] = useState(emptySignUp);
   const [passwordShown, setPasswordShown] = useState(false);
   function handleForm(e) {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
@@ -28,7 +36,22 @@ export default function AuthScreen() {
 
   function submitSignUpForm(e) {
     e.preventDefault();
-    console.log(signUpForm);
+
+    postSignUp(signUpForm)
+      .then((res) => {
+        alert("Cadastro feito com sucesso");
+        setIsLogin(!isLogin);
+      })
+      .catch((e) => {
+        setSignUpForm(emptySignUp);
+        if (e.response.status === 409) {
+          alert("Email já cadastrado");
+
+          return;
+        }
+
+        alert("Dados invalidos");
+      });
   }
 
   return isLogin ? (
@@ -48,7 +71,7 @@ export default function AuthScreen() {
           type={passwordShown ? "text" : "password"}
           name="password"
           value={loginForm.password}
-          placeholder="Senha"
+          placeholder="senha"
         ></input>
         <TogglePasswordView
           passwordShown={passwordShown}
@@ -62,7 +85,7 @@ export default function AuthScreen() {
         <h3
           onClick={() => {
             setIsLogin(!isLogin);
-            setLoginForm({ email: "", password: "" });
+            setLoginForm(emptyLogin);
           }}
         >
           não tem uma conta? cadastre-se
@@ -93,7 +116,7 @@ export default function AuthScreen() {
           type={passwordShown ? "text" : "password"}
           name="password"
           value={signUpForm.password}
-          placeholder="Senha"
+          placeholder="senha"
         ></input>
         <input
           onChange={handleForm2}
@@ -115,12 +138,7 @@ export default function AuthScreen() {
       <h3
         onClick={() => {
           setIsLogin(!isLogin);
-          setSignUpForm({
-            email: "",
-            password: "",
-            confirm_password: "",
-            name: "",
-          });
+          setSignUpForm(emptySignUp);
         }}
       >
         já tem uma conta? faça login
