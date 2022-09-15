@@ -1,11 +1,13 @@
 import Headers from "../Headers/Headers.js";
 import styled from "styled-components";
-import FormContainer from "../FormContainer.js";
+import FormContainer from "../templates/FormContainer.js";
 import { useState } from "react";
-import TogglePasswordView from "../togglePasswordView.js";
-import { postSignUp } from "../../services/plainstore.js";
+import TogglePasswordView from "../templates/togglePasswordView.js";
+import { postLogin, postSignUp } from "../../services/plainstore.js";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthScreen() {
+  const navigate = useNavigate();
   const emptySignUp = {
     name: "",
     email: "",
@@ -31,7 +33,14 @@ export default function AuthScreen() {
 
   function submitForm(e) {
     e.preventDefault();
-    console.log(loginForm);
+
+    postLogin(loginForm)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("plainstore", JSON.stringify(res.data));
+        navigate("/");
+      })
+      .catch((e) => alert(e.response.data));
   }
 
   function submitSignUpForm(e) {

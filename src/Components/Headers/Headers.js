@@ -14,9 +14,13 @@ export default function Headers() {
   let user = {};
 
   function checkLogin() {
-    if (token !== "") {
+    let info = JSON.parse(localStorage.getItem("plainstore"));
+    if (info) {
+      //checar se token é valido
+      // checkToken(token).then().catch();
+
       user = {
-        title: name,
+        title: `Olá ${info.user.name}`,
         path: "/", //Mudar para profile depois
       };
     } else {
