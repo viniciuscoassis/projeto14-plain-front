@@ -1,5 +1,5 @@
-import eye from "../../src/assets/img/eye.png";
-import noeye from "../../src/assets/img/noeye.png";
+import eye from "../../assets/img/eye.png";
+import noeye from "../../assets/img/noeye.png";
 import styled from "styled-components";
 
 export default function TogglePasswordView({

@@ -7,26 +7,13 @@ import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
 import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
+import checkLogin from "./checkLogin";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
-  const { token, cartQuantity, name } = useContext(Context);
-  let user = {};
+  const { cartQuantity } = useContext(Context);
 
-  function checkLogin() {
-    if (token !== "") {
-      user = {
-        title: name,
-        path: "/", //Mudar para profile depois
-      };
-    } else {
-      user = {
-        title: "Login",
-        path: "/auth",
-      };
-    }
-  }
-  checkLogin();
+  let { user } = checkLogin();
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
