@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as IoIcons from "react-icons/io";
+import { useContext } from "react";
+import Context from "../../Context/context.js";
+
+/* 
+
+let user = CheckLogin(); */
 
 export const SideBarData = [
   {
@@ -14,14 +20,8 @@ export const SideBarData = [
   },
   {
     title: "Produtos",
-    path: "/",
+    path: "/products",
     icon: <FaIcons.FaCartPlus />,
-    cName: "nav-text",
-  },
-  {
-    title: "Login",
-    path: "/auth",
-    icon: <FaIcons.FaUserAlt />,
     cName: "nav-text",
   },
 ];
