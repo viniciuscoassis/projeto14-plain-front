@@ -4,12 +4,29 @@ import { Link } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
-
-import { useState } from "react";
+import Context from "../../Context/context.js";
+import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
 
-export default function Headers({ cartQuantity }) {
+export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
+  const { token, cartQuantity, name } = useContext(Context);
+  let user = {};
+
+  function checkLogin() {
+    if (token !== "") {
+      user = {
+        title: name,
+        path: "/", //Mudar para profile depois
+      };
+    } else {
+      user = {
+        title: "Login",
+        path: "/auth",
+      };
+    }
+  }
+  checkLogin();
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -25,8 +42,14 @@ export default function Headers({ cartQuantity }) {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items">
           <li className="navbar-toggle">
-            <Link to="/" className="menu-bars">
-              <AiIcons.AiOutlineClose onClick={showSidebar} />
+            <div className="menu-bars">
+              <AiIcons.AiOutlineClose onClick={() => setSidebar(!sidebar)} />
+            </div>
+          </li>
+          <li className="nav-text">
+            <Link to={user.path}>
+              <FaIcons.FaUserAlt />
+              <span>{user.title}</span>
             </Link>
           </li>
           {SideBarData.map((item, index) => {
@@ -147,7 +170,9 @@ const Wrapper = styled.div`
     right: 6px;
     border-radius: 50%;
     p {
+      text-align: center;
       position: absolute;
+      right: 17px;
     }
   }
 `;

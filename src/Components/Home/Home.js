@@ -4,7 +4,6 @@ import Homeimg from "../../assets/img/homeimg.svg";
 import Footer from "../Footer/Footer.js";
 
 export default function Home() {
-  // const [sidebar, setSideBar] = useState("close");
   return (
     <>
       <Headers cartQuantity="1" />
