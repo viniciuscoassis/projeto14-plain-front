@@ -10,6 +10,7 @@ import { SideBarData } from "./Sidebar";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
+
   const { cartQuantity, name } = useContext(Context);
   let user = {};
 
@@ -83,6 +84,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   padding: 0 15px;
   position: relative;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
   .navbar {
     background-color: #060b26;
     height: 80px;
@@ -107,6 +110,7 @@ const Wrapper = styled.div`
     top: 0;
     left: -100%;
     transition: 850ms;
+    z-index: 1000;
   }
 
   .nav-menu.active {

@@ -12,8 +12,10 @@ function postLogin(body) {
   return promisse;
 }
 
-function createHeaders() {
-  const auth = JSON.parse(localStorage.getItem("plainstore")).token;
-  const config = { headers: { Authorization: `Bearer ${auth}` } };
-  return config;
-}
+// function createHeaders() {
+//   const auth = JSON.parse(localStorage.getItem("plainstore")).token;
+//   const config = { headers: { Authorization: `Bearer ${auth}` } };
+//   return config;
+// }
+
+export { postLogin, postSignUp };

@@ -5,6 +5,7 @@ import Home from "./Home/Home";
 import Context from "../Context/context.js";
 import { useState } from "react";
 import Products from "./Products/Products";
+import ProfilePage from "./ProfilePage/ProfilePage";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthScreen />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>
       </Context.Provider>
