@@ -10,11 +10,11 @@ import { SideBarData } from "./Sidebar";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
-  const { token, cartQuantity, name } = useContext(Context);
+  const { cartQuantity, name } = useContext(Context);
   let user = {};
 
   function checkLogin() {
-    if (token !== "") {
+    if (name !== "") {
       user = {
         title: name,
         path: "/", //Mudar para profile depois
