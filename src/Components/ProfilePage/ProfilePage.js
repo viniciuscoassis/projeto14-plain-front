@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfilePage() {
   const navigate = useNavigate();
   const { info } = checkLogin();
-  console.log(info);
+
   return (
     <>
       <Headers></Headers>
