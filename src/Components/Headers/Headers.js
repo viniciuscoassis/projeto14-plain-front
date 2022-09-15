@@ -98,7 +98,11 @@ export default function Headers() {
             <button>enviar</button>
           </div>
         </CupomContainer>
-        <InfoContainer>haaaaaaa</InfoContainer>
+        <InfoContainer>
+          <p>(xx)xxxx-xxxx </p>
+          <p>sac@plaincompany.com.br</p>
+          <p>Rua xx xxxx, xxx - Bairro xxx, SP</p>
+        </InfoContainer>
       </nav>
       <div>
         <img src={logo} alt="logo" />
@@ -115,6 +119,18 @@ export default function Headers() {
     </Wrapper>
   );
 }
+const InfoContainer = styled.div`
+  width: 100%;
+  margin: 20px 0;
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: gray;
+  font-size: 12px;
+`;
+
 const CartIcon = styled.div`
   div {
     position: absolute;
@@ -128,13 +144,6 @@ const CartIcon = styled.div`
     color: whitesmoke;
     right: 10px;
   }
-`;
-
-const InfoContainer = styled.div`
-  margin-top: 20px;
-  width: 100%;
-  background-color: red;
-  color: red;
 `;
 
 const CupomContainer = styled.form`
