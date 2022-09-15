@@ -8,6 +8,7 @@ import Context from "../../Context/context.js";
 import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
 import checkLogin from "./checkLogin";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
@@ -55,7 +56,7 @@ export default function Headers() {
       </nav>
       <nav className={CartMenu ? "cart-menu active" : "cart-menu"}>
         <div className="headerCartMenu">
-          <img src={logo} />
+          <img src={logo} alt="plain logo" />
 
           <h2>Sacola</h2>
           <AiIcons.AiOutlineClose
@@ -64,28 +65,151 @@ export default function Headers() {
             onClick={showCartMenu}
           />
         </div>
-        <div className="menu-frete-gratis">
+        <ContainerFreeFrete>
           <h2>faltam R$ 299,90 para frete grátis</h2>
           <div>
-            <h3>R$0</h3> <h3>R$299,90</h3>
+            <h3>R$0</h3>
+            <div>
+              {" "}
+              <ProgressBar
+                completed="50"
+                width="50vw"
+                height="15px"
+                labelSize="10px"
+                margin="0 20px"
+                bgColor="	yellowgreen"
+                labelColor="black"
+              />
+            </div>
+
+            <h3>R$299,90</h3>
           </div>
-        </div>
+        </ContainerFreeFrete>
+
+        <CartContainer>
+          <h1>SEU CARRINHO ESTÁ VAZIO :(</h1>
+          <h3>CONTINUE COMPRANDO</h3>
+        </CartContainer>
+        <CupomContainer>
+          {" "}
+          <label>CUPOM DE DESCONTO</label>
+          <div>
+            <input type="text" placeholder="insira seu cupom"></input>
+            <button>enviar</button>
+          </div>
+        </CupomContainer>
+        <InfoContainer>haaaaaaa</InfoContainer>
       </nav>
       <div>
         <img src={logo} alt="logo" />
       </div>
-      <div>
-        <p>{cartQuantity}</p>
+      <CartIcon>
+        <div>{cartQuantity}</div>
         <BsIcons.BsHandbag
           onClick={showCartMenu}
           color="black"
           title="bag"
           size={30}
         />
-      </div>
+      </CartIcon>
     </Wrapper>
   );
 }
+const CartIcon = styled.div`
+  div {
+    position: absolute;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    border-radius: 50%;
+    color: whitesmoke;
+    right: 10px;
+  }
+`;
+
+const InfoContainer = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  background-color: red;
+  color: red;
+`;
+
+const CupomContainer = styled.form`
+  height: 12vh;
+  background-color: lightgray;
+  width: 100%;
+  display: flex;
+  padding: 30px;
+  justify-content: center;
+  flex-direction: column;
+
+  div {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  label {
+    margin-bottom: 10px;
+  }
+  input {
+    width: 100%;
+    border: none;
+
+    padding: 5px 0;
+  }
+
+  button {
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+  }
+`;
+
+const CartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  width: 100vw;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+
+  h1 {
+    color: grey;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: 400;
+    color: grey;
+  }
+`;
+const ContainerFreeFrete = styled.div`
+  background-color: black;
+  color: white;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  padding: 15px 0;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
 
 const Wrapper = styled.div`
   height: 80px;
@@ -102,7 +226,7 @@ const Wrapper = styled.div`
   .cart-menu {
     background-color: #ffffff;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,22 +247,6 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 30px;
-  }
-  .cart-menu .menu-frete-gratis {
-    background-color: black;
-    color: white;
-    width: 100%;
-    height: 60px;
-    display: flex;
-    padding: 15px 0;
-    justify-content: space-between;
-    flex-direction: column;
-    align-items: center;
-    div {
-      display: flex;
-      justify-content: space-between;
-      margin
-    }
   }
 
   .navbar {
@@ -213,22 +321,5 @@ const Wrapper = styled.div`
 
   span {
     margin-left: 16px;
-  }
-
-  div:nth-child(5) {
-    background-color: black;
-    color: white;
-    width: 20px;
-    height: 20px;
-    padding-left: 7px;
-    padding-top: 1px;
-    top: 20px;
-
-    border-radius: 50%;
-    p {
-      text-align: center;
-      position: absolute;
-      right: 17px;
-    }
   }
 `;
