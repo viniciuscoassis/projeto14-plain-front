@@ -2,10 +2,8 @@ import styled from "styled-components";
 import Headers from "../Headers/Headers.js";
 import Homeimg from "../../assets/img/homeimg.svg";
 import Footer from "../Footer/Footer.js";
-import { useState } from "react";
 
 export default function Home() {
-  const [sidebar, setSideBar] = useState("close");
   return (
     <>
       <Headers cartQuantity="1" />
