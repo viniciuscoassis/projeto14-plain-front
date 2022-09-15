@@ -10,7 +10,23 @@ import { SideBarData } from "./Sidebar";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
-  const { token, cartQuantity } = useContext(Context);
+  const { token, cartQuantity, name } = useContext(Context);
+  let user = {};
+
+  function checkLogin() {
+    if (token !== "") {
+      user = {
+        title: name,
+        path: "/", //Mudar para profile depois
+      };
+    } else {
+      user = {
+        title: "Login",
+        path: "/auth",
+      };
+    }
+  }
+  checkLogin();
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -26,11 +42,16 @@ export default function Headers() {
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items">
           <li className="navbar-toggle">
-            <Link to="/" className="menu-bars">
+            <div className="menu-bars">
               <AiIcons.AiOutlineClose onClick={() => setSidebar(!sidebar)} />
+            </div>
+          </li>
+          <li className="nav-text">
+            <Link to={user.path}>
+              <FaIcons.FaUserAlt />
+              <span>{user.title}</span>
             </Link>
           </li>
-          <li className="user-icon"></li>
           {SideBarData.map((item, index) => {
             return (
               <li key={index} className={item.cName}>

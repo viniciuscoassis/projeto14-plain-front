@@ -4,10 +4,13 @@ import AuthScreen from "./authPage/AuthScreen";
 import Home from "./Home/Home";
 import Context from "../Context/context.js";
 import { useState } from "react";
+import Products from "./Products/Products";
 
 export default function App() {
   const [token, setToken] = useState("");
   const [cartQuantity, setCartQuantity] = useState(0);
+  const [name, setName] = useState("");
+
   return (
     <>
       <GlobalStyle />
@@ -17,12 +20,15 @@ export default function App() {
           setToken,
           cartQuantity,
           setCartQuantity,
+          name,
+          setName,
         }}
       >
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthScreen />} />
+            <Route path="/products" element={<Products />} />
           </Routes>
         </BrowserRouter>
       </Context.Provider>
