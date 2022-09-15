@@ -22,6 +22,7 @@ export default function Home() {
 }
 
 const Container = styled.main`
+  margin-top: -30px;
   .warnings {
     height: 73px;
     text-align: center;
