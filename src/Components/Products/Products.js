@@ -9,7 +9,7 @@ export default function Products() {
   const navigate = useNavigate();
 
   const [productsFilter, setProductsFilter] = useState("TODOS");
-  const filters = ["VESTUÁRIO", "ACESSÓRIOS", "CALÇADOS"];
+  const filters = ["vestuário", "acessórios", "calçados"];
   return (
     <>
       <Headers />
@@ -19,7 +19,11 @@ export default function Products() {
           <div className="filters-buttons">
             {filters.map((item, index) => {
               return (
-                <Button key={index} title={item} state={setProductsFilter} />
+                <Button
+                  key={index}
+                  title={item.toUpperCase()}
+                  state={setProductsFilter}
+                />
               );
             })}
           </div>

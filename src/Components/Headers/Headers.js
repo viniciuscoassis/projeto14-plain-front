@@ -7,15 +7,31 @@ import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
 import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
-import checkLogin from "./checkLogin";
+// import checkLogin from "./checkLogin";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
-  const { cartQuantity } = useContext(Context);
+
   const [CartMenu, setCartMenu] = useState(false);
 
-  let { user } = checkLogin();
+  const { cartQuantity, name } = useContext(Context);
+  let user = {};
+
+  function checkLogin() {
+    if (name !== "") {
+      user = {
+        title: name,
+        path: "/", //Mudar para profile depois
+      };
+    } else {
+      user = {
+        title: "Login",
+        path: "/auth",
+      };
+    }
+  }
+  checkLogin();
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
