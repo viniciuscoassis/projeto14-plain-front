@@ -15,7 +15,7 @@ export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
   const [CartMenu, setCartMenu] = useState(false);
 
-  const { cart, setCart } = useContext(Context);
+  const { cart } = useContext(Context);
 
   let user = checkLogin().user;
 

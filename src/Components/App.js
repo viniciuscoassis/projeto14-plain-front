@@ -31,7 +31,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthScreen />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:nomeProduto" element={<ProductDetails />} />
+            <Route path="/products/:idProduto" element={<ProductDetails />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>

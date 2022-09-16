@@ -1,28 +1,28 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-export default function Product({ img, name, price }) {
+export default function Product({ id, img, name, price }) {
   const navigate = useNavigate();
-  const idLink = name.replace(/ /g, "-");
+  // const idLink = name.replace(/ /g, "-");
 
   return (
-    <div className="product">
+    <Wrapper>
       <img
         src={img}
         alt="product"
-        onClick={() => navigate(`/products/${idLink}`)}
+        onClick={() => navigate(`/products/${id}`)}
       />
-      <h2
-        className="product-title"
-        onClick={() => navigate(`/products/${idLink}`)}
-      >
+      <h2 className="product-title" onClick={() => navigate(`/products/${id}`)}>
         {name}
       </h2>
-      <p
-        className="product-price"
-        onClick={() => navigate(`/products/${idLink}`)}
-      >
+      <p className="product-price" onClick={() => navigate(`/products/${id}`)}>
         R$ {Number(price).toFixed(2)}
       </p>
-    </div>
+    </Wrapper>
   );
 }
+const Wrapper = styled.div`
+  img {
+    object-fit: cover;
+  }
+`;

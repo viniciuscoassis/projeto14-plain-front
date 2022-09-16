@@ -6,25 +6,22 @@ import { getProducts } from "../../services/plainstore.js";
 import Context from "../../Context/context.js";
 import Product from "./Product.js";
 import Footer from "../Footer/Footer.js";
-import { productsStoredArray } from "./productsStoredArray.js";
 
 export default function Products() {
   const { storage, setStorage } = useContext(Context);
   const [productsFilter, setProductsFilter] = useState("TODOS");
   const filters = ["vestuário", "acessórios", "calçados"];
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const products = await getProducts();
-  //       setStorage(products.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  // }, []);
-
-  useEffect(() => {}, [setStorage(productsStoredArray)]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const products = await getProducts();
+        setStorage(products.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [setStorage]);
 
   const result = storage.filter(checkType);
 
@@ -59,9 +56,15 @@ export default function Products() {
           </p>
         </div>
         <div className="products-container">
-          {result.map((item) => {
+          {result.map((item, index) => {
             return (
-              <Product img={item.img} name={item.name} price={item.price} />
+              <Product
+                key={index}
+                id={item._id}
+                img={item.img}
+                name={item.name}
+                price={item.price}
+              />
             );
           })}
         </div>

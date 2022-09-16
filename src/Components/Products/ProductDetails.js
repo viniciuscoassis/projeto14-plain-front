@@ -1,26 +1,27 @@
 import Context from "../../Context/context.js";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Headers from "../Headers/Headers.js";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer.js";
-import { productsStoredArray } from "./productsStoredArray.js";
+
+import { getProductById } from "../../services/plainstore.js";
 
 export default function ProductDetails() {
   const navigate = useNavigate();
-  const { storage, setCart, cart, setStorage } = useContext(Context);
+  const { setCart, cart } = useContext(Context);
   const [itemQuantity, setItemQuantity] = useState(0);
-  const { nomeProduto } = useParams();
+  const { idProduto } = useParams();
+  const [element, setElement] = useState({});
 
-  console.log(cart);
-  useEffect(() => {}, [setStorage(productsStoredArray)]);
+  async function fetchData() {
+    // You can await here
+    const response = await getProductById(idProduto);
+    setElement(response.data);
+  }
+  fetchData();
 
-  const element = storage.find((e) => {
-    if (e.name === nomeProduto.replace(/-/g, " ")) {
-      return e;
-    }
-  });
   if (itemQuantity > Number(element.amount)) {
     setItemQuantity(itemQuantity - 1);
   } else if (itemQuantity < 0) {
@@ -29,72 +30,84 @@ export default function ProductDetails() {
 
   return (
     <>
-      <Headers />
-      <Container>
-        <div className="first-session">
-          <h1>{element.name}</h1>
-          <h2>R$ {Number(element.price).toFixed(2)}</h2>
-          <img src={element.img} alt="img" />
-        </div>
-        <div className="divisor"></div>
-        <div className="second-session">
-          <h1>{element.name}</h1>
-          <h2>R$ {Number(element.price).toFixed(2)}</h2>
-          <p>
-            Pague com <strong>PIX</strong> e ganhe mais{" "}
-            <strong>5% de desconto</strong>
-          </p>
-          <p>
-            Parcele sua compra em até <strong>10x sem juros</strong>
-          </p>
-          <div className="quantity">
-            <button
-              onClick={() => {
-                setItemQuantity(itemQuantity - 1);
-              }}
-            >
-              -
-            </button>
-            <p>{itemQuantity}</p>
-            <button
-              onClick={() => {
-                setItemQuantity(itemQuantity + 1);
-              }}
-            >
-              +
-            </button>
-          </div>
-        </div>
-        <div className="third-session">
-          <div className="frete">
-            <p>
-              FRETE E <br /> PRAZO
-            </p>
-            <form>
-              <input type="text"></input>
-              <button>{">"}</button>
-            </form>
-          </div>
-        </div>
-        <div className="buy">
-          <button
-            onClick={() => {
-              navigate("/products");
-              setCart([...cart, { nomeProduto, itemQuantity, element }]);
-            }}
-          >
-            ADICIONAR AO CARRINHO
-          </button>
-        </div>
-      </Container>
-      <Footer />
+      {element ? (
+        <>
+          <Headers />
+          <Container>
+            <div className="first-session">
+              <h1>{element.name}</h1>
+              <h2>R$ {Number(element.price).toFixed(2)}</h2>
+              <img src={element.img} alt="img" />
+            </div>
+            <div className="divisor"></div>
+            <div className="second-session">
+              <h1>{element.name}</h1>
+              <h2>R$ {Number(element.price).toFixed(2)}</h2>
+              <p>
+                Pague com <strong>PIX</strong> e ganhe mais{" "}
+                <strong>5% de desconto</strong>
+              </p>
+              <p>
+                Parcele sua compra em até <strong>10x sem juros</strong>
+              </p>
+              <div className="quantity">
+                <button
+                  onClick={() => {
+                    setItemQuantity(itemQuantity - 1);
+                  }}
+                >
+                  -
+                </button>
+                <p>{itemQuantity}</p>
+
+                <button
+                  onClick={() => {
+                    setItemQuantity(itemQuantity + 1);
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <h4>
+                {itemQuantity === element.amount
+                  ? "estoque máximo atingido"
+                  : ""}
+              </h4>
+            </div>
+            <div className="third-session">
+              <div className="frete">
+                <p>
+                  FRETE E <br /> PRAZO
+                </p>
+                <form>
+                  <input type="text"></input>
+                  <button>{">"}</button>
+                </form>
+              </div>
+            </div>
+            <div className="buy">
+              <button
+                onClick={() => {
+                  navigate("/products");
+                  setCart([...cart, { itemQuantity, element }]);
+                }}
+              >
+                ADICIONAR AO CARRINHO
+              </button>
+            </div>
+          </Container>
+          <Footer />
+        </>
+      ) : (
+        <h1>Servidor está com erro</h1>
+      )}
     </>
   );
 }
 
 const Container = styled.main`
   margin: 0 auto;
-  margin-top: 0px;
+  margin-top: 100px;
   img {
     width: 300px;
     height: 380px;
