@@ -6,11 +6,12 @@ import Context from "../Context/context.js";
 import { useState } from "react";
 import Products from "./Products/Products";
 import ProfilePage from "./ProfilePage/ProfilePage";
+import ProductDetails from "./Products/ProductDetails";
 
 export default function App() {
   const [token, setToken] = useState("");
-  const [cartQuantity, setCartQuantity] = useState(0);
-  const [name, setName] = useState("");
+  const [cartQuantity, setCartQuantity] = useState([]);
+  const [storage, setStorage] = useState([]);
 
   return (
     <>
@@ -21,8 +22,8 @@ export default function App() {
           setToken,
           cartQuantity,
           setCartQuantity,
-          name,
-          setName,
+          storage,
+          setStorage,
         }}
       >
         <BrowserRouter>
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthScreen />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:nomeProduto" element={<ProductDetails />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>

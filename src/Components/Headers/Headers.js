@@ -7,31 +7,18 @@ import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
 import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
-// import checkLogin from "./checkLogin";
+
 import ProgressBar from "@ramonak/react-progress-bar";
+import checkLogin from "./checkLogin";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
 
   const [CartMenu, setCartMenu] = useState(false);
 
-  const { cartQuantity, name } = useContext(Context);
-  let user = {};
+  const { cartQuantity } = useContext(Context);
 
-  function checkLogin() {
-    if (name !== "") {
-      user = {
-        title: name,
-        path: "/", //Mudar para profile depois
-      };
-    } else {
-      user = {
-        title: "Login",
-        path: "/auth",
-      };
-    }
-  }
-  checkLogin();
+  let user = checkLogin().user;
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
@@ -124,7 +111,7 @@ export default function Headers() {
         <img src={logo} alt="logo" />
       </div>
       <CartIcon>
-        <div>{cartQuantity}</div>
+        <div>{cartQuantity.length}</div>
         <BsIcons.BsHandbag
           onClick={showCartMenu}
           color="black"
@@ -240,11 +227,12 @@ const Wrapper = styled.div`
   height: 80px;
   width: 375px;
   display: flex;
-
+  top: 0;
   align-items: center;
   justify-content: space-between;
+  background-color: white;
   padding: 0 15px;
-  position: relative;
+  position: fixed;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
 
