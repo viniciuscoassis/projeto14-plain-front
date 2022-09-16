@@ -22,10 +22,14 @@ export default function Headers() {
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
 
-  // const sumCart = cart.map((value) => value.price);
-  // .reduce((prev, curr) => prev + curr, 0);
-
-  // console.log(sumCart);
+  let totalSum = 0;
+  cart.forEach((val) => {
+    let sum = val.element.price * val.itemQuantity;
+    totalSum += sum;
+  });
+  const valFreteGratis = 299.9;
+  let valorParaFrete = valFreteGratis - totalSum;
+  let porcentagemParaFrete = Math.floor((totalSum / valFreteGratis) * 100);
 
   return (
     <Wrapper>
@@ -74,13 +78,13 @@ export default function Headers() {
           />
         </div>
         <ContainerFreeFrete>
-          <h2>faltam R$ 299,90 para frete grátis</h2>
+          <h2>{`faltam R$ ${valorParaFrete.toFixed(2)} para frete grátis`}</h2>
           <div>
             <h3>R$0</h3>
             <div>
               {" "}
               <ProgressBar
-                completed="50"
+                completed={porcentagemParaFrete}
                 width="50vw"
                 height="15px"
                 labelSize="10px"
