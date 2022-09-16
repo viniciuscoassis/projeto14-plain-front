@@ -65,7 +65,7 @@ export default function Products() {
 }
 
 const Container = styled.main`
-  margin-top: 90px;
+  margin-top: 120px;
   h1 {
     text-align: center;
     font-size: 30px;

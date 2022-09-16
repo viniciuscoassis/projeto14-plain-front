@@ -45,9 +45,9 @@ export default function ProfilePage() {
 }
 
 const Wrapper = styled.div`
-  margin: 55px;
   color: #979797;
-  margin-top: 100px;
+  padding-top: 80px;
+  margin: 40px;
 
   .perfil {
     display: flex;

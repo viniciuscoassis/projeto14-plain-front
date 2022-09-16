@@ -85,7 +85,7 @@ export default function ProductDetails() {
 
 const Container = styled.main`
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top: 0px;
   img {
     width: 300px;
     height: 380px;
