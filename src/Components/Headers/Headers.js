@@ -13,15 +13,20 @@ import checkLogin from "./checkLogin";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
-
   const [CartMenu, setCartMenu] = useState(false);
 
-  const { cart } = useContext(Context);
+  const { cart, setCart } = useContext(Context);
 
   let user = checkLogin().user;
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
+
+  // const sumCart = cart.map((value) => value.price);
+  // .reduce((prev, curr) => prev + curr, 0);
+
+  // console.log(sumCart);
+
   return (
     <Wrapper>
       <div>

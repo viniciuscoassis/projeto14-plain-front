@@ -1,18 +1,20 @@
 import Context from "../../Context/context.js";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Headers from "../Headers/Headers.js";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer.js";
+import { productsStoredArray } from "./productsStoredArray.js";
 
 export default function ProductDetails() {
   const navigate = useNavigate();
-  const { storage, setCart, cart } = useContext(Context);
+  const { storage, setCart, cart, setStorage } = useContext(Context);
   const [itemQuantity, setItemQuantity] = useState(0);
   const { nomeProduto } = useParams();
 
   console.log(cart);
+  useEffect(() => {}, [setStorage(productsStoredArray)]);
 
   const element = storage.find((e) => {
     if (e.name === nomeProduto.replace(/-/g, " ")) {
@@ -78,7 +80,7 @@ export default function ProductDetails() {
           <button
             onClick={() => {
               navigate("/products");
-              setCart([...cart, { nomeProduto, itemQuantity }]);
+              setCart([...cart, { nomeProduto, itemQuantity, element }]);
             }}
           >
             ADICIONAR AO CARRINHO

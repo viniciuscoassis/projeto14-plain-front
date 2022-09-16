@@ -20,7 +20,6 @@ export default function App() {
         value={{
           token,
           setToken,
-
           storage,
           setStorage,
           cart,
