@@ -9,8 +9,8 @@ import ProfilePage from "./ProfilePage/ProfilePage";
 
 export default function App() {
   const [token, setToken] = useState("");
-  const [cartQuantity, setCartQuantity] = useState(0);
-  const [name, setName] = useState("");
+  const [cartQuantity, setCartQuantity] = useState([]);
+  const [storage, setStorage] = useState([]);
 
   return (
     <>
@@ -21,8 +21,8 @@ export default function App() {
           setToken,
           cartQuantity,
           setCartQuantity,
-          name,
-          setName,
+          storage,
+          setStorage,
         }}
       >
         <BrowserRouter>

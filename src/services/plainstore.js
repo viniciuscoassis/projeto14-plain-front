@@ -12,10 +12,15 @@ function postLogin(body) {
   return promisse;
 }
 
+async function getProducts() {
+  let promisse = await axios.get(`${BASE_URL}products`);
+  return promisse;
+}
+
 // function createHeaders() {
 //   const auth = JSON.parse(localStorage.getItem("plainstore")).token;
 //   const config = { headers: { Authorization: `Bearer ${auth}` } };
 //   return config;
 // }
 
-export { postLogin, postSignUp };
+export { postLogin, postSignUp, getProducts };

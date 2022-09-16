@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Headers from "../Headers/Headers.js";
-import Productphoto from "../../assets/img/homeimg.svg";
-import { useNavigate } from "react-router-dom";
 import Button from "./Button.js";
+import { getProducts } from "../../services/plainstore.js";
+import Context from "../../Context/context.js";
+import Product from "./Product.js";
 
 export default function Products() {
-  const navigate = useNavigate();
-
+  const { storage, setStorage } = useContext(Context);
   const [productsFilter, setProductsFilter] = useState("TODOS");
   const filters = ["vestuário", "acessórios", "calçados"];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const products = await getProducts();
+        setStorage(products.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  const result = storage.filter(checkType);
+
+  function checkType(product) {
+    const type = product.type;
+    if (type === productsFilter.toLowerCase() || productsFilter === "TODOS") {
+      return product;
+    }
+  }
   return (
     <>
       <Headers />
@@ -17,13 +37,9 @@ export default function Products() {
         <h1>{productsFilter}</h1>
         <div className="filters">
           <div className="filters-buttons">
-            {filters.map((item, index) => {
+            {filters.map((item) => {
               return (
-                <Button
-                  key={index}
-                  title={item.toUpperCase()}
-                  state={setProductsFilter}
-                />
+                <Button title={item.toUpperCase()} state={setProductsFilter} />
               );
             })}
           </div>
@@ -35,58 +51,11 @@ export default function Products() {
           </p>
         </div>
         <div className="products-container">
-          <div className="product">
-            <img
-              src={Productphoto}
-              alt="product"
-              onClick={() => navigate("/")}
-            />
-            <h2 className="product-title" onClick={() => navigate("/")}>
-              TITULO DO PRODUTO
-            </h2>
-            <p className="product-price" onClick={() => navigate("/")}>
-              R$ 00,00
-            </p>
-          </div>
-          <div className="product">
-            <img
-              src={Productphoto}
-              alt="product"
-              onClick={() => navigate("/")}
-            />
-            <h2 className="product-title" onClick={() => navigate("/")}>
-              TITULO DO PRODUTO
-            </h2>
-            <p className="product-price" onClick={() => navigate("/")}>
-              R$ 00,00
-            </p>
-          </div>
-          <div className="product">
-            <img
-              src={Productphoto}
-              alt="product"
-              onClick={() => navigate("/")}
-            />
-            <h2 className="product-title" onClick={() => navigate("/")}>
-              TITULO DO PRODUTO
-            </h2>
-            <p className="product-price" onClick={() => navigate("/")}>
-              R$ 00,00
-            </p>
-          </div>
-          <div className="product">
-            <img
-              src={Productphoto}
-              alt="product"
-              onClick={() => navigate("/")}
-            />
-            <h2 className="product-title" onClick={() => navigate("/")}>
-              TITULO DO PRODUTO
-            </h2>
-            <p className="product-price" onClick={() => navigate("/")}>
-              R$ 00,00
-            </p>
-          </div>
+          {result.map((item) => {
+            return (
+              <Product img={item.img} name={item.name} price={item.price} />
+            );
+          })}
         </div>
       </Container>
     </>
@@ -128,7 +97,7 @@ const Container = styled.main`
 
   .products-container {
     img {
-      width: 167px;
+      width: 150px;
       height: 243px;
     }
     display: flex;
@@ -137,6 +106,7 @@ const Container = styled.main`
     align-items: center;
     justify-content: center;
     h2 {
+      max-width: 150px;
       color: black;
       font-size: 15px;
       margin-bottom: 5px;

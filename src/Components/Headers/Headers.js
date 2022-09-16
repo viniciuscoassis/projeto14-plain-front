@@ -7,27 +7,13 @@ import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
 import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
+import checkLogin from "./checkLogin";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
 
-  const { cartQuantity, name } = useContext(Context);
-  let user = {};
-
-  function checkLogin() {
-    if (name !== "") {
-      user = {
-        title: name,
-        path: "/", //Mudar para profile depois
-      };
-    } else {
-      user = {
-        title: "Login",
-        path: "/auth",
-      };
-    }
-  }
-  checkLogin();
+  const { cartQuantity } = useContext(Context);
+  let user = checkLogin().user;
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -69,7 +55,7 @@ export default function Headers() {
         <img src={logo} alt="logo" />
       </div>
       <div>
-        <p>{cartQuantity}</p>
+        <p>{cartQuantity.length}</p>
         <BsIcons.BsHandbag color="black" title="bag" size={30} />
       </div>
     </Wrapper>
