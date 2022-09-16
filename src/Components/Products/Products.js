@@ -6,22 +6,25 @@ import { getProducts } from "../../services/plainstore.js";
 import Context from "../../Context/context.js";
 import Product from "./Product.js";
 import Footer from "../Footer/Footer.js";
+import { productsStoredArray } from "./productsStoredArray.js";
 
 export default function Products() {
   const { storage, setStorage } = useContext(Context);
   const [productsFilter, setProductsFilter] = useState("TODOS");
   const filters = ["vestuário", "acessórios", "calçados"];
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const products = await getProducts();
-        setStorage(products.data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const products = await getProducts();
+  //       setStorage(products.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  // }, []);
+
+  useEffect(() => {}, [setStorage(productsStoredArray)]);
 
   const result = storage.filter(checkType);
 
@@ -38,9 +41,13 @@ export default function Products() {
         <h1>{productsFilter}</h1>
         <div className="filters">
           <div className="filters-buttons">
-            {filters.map((item) => {
+            {filters.map((item, index) => {
               return (
-                <Button title={item.toUpperCase()} state={setProductsFilter} />
+                <Button
+                  key={index}
+                  title={item.toUpperCase()}
+                  state={setProductsFilter}
+                />
               );
             })}
           </div>

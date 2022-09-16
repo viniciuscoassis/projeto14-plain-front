@@ -16,7 +16,7 @@ export default function Headers() {
 
   const [CartMenu, setCartMenu] = useState(false);
 
-  const { cartQuantity } = useContext(Context);
+  const { cart } = useContext(Context);
 
   let user = checkLogin().user;
 
@@ -111,7 +111,7 @@ export default function Headers() {
         <img src={logo} alt="logo" />
       </div>
       <CartIcon>
-        <div>{cartQuantity.length}</div>
+        <div>{cart.length}</div>
         <BsIcons.BsHandbag
           onClick={showCartMenu}
           color="black"

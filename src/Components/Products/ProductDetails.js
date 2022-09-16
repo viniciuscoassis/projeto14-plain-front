@@ -8,10 +8,12 @@ import Footer from "../Footer/Footer.js";
 
 export default function ProductDetails() {
   const navigate = useNavigate();
-  const { storage } = useContext(Context);
+  const { storage, setCart, cart } = useContext(Context);
   const [itemQuantity, setItemQuantity] = useState(0);
-
   const { nomeProduto } = useParams();
+
+  console.log(cart);
+
   const element = storage.find((e) => {
     if (e.name === nomeProduto.replace(/-/g, " ")) {
       return e;
@@ -73,7 +75,12 @@ export default function ProductDetails() {
           </div>
         </div>
         <div className="buy">
-          <button onClick={() => navigate("/produtos")}>
+          <button
+            onClick={() => {
+              navigate("/products");
+              setCart([...cart, { nomeProduto, itemQuantity }]);
+            }}
+          >
             ADICIONAR AO CARRINHO
           </button>
         </div>
