@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Headers from "../Headers/Headers.js";
 import Homeimg from "../../assets/img/homeimg.svg";
+import LadYhOME from "../../assets/img/moça.png";
 import Footer from "../Footer/Footer.js";
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
           <p>5% de desconto para pagamentos no pix</p>
         </div>
         <img src={Homeimg} alt="product" />
-        <img src={Homeimg} alt="product" />
+        <img src={LadYhOME} alt="product" />
       </Container>
       <Footer />
     </>

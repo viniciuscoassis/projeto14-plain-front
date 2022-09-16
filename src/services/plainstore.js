@@ -17,10 +17,15 @@ async function getProducts() {
   return promisse;
 }
 
+async function getProductById(id) {
+  let promisse = await axios.get(`${BASE_URL}products/${id}`);
+  return promisse;
+}
+
 // function createHeaders() {
 //   const auth = JSON.parse(localStorage.getItem("plainstore")).token;
 //   const config = { headers: { Authorization: `Bearer ${auth}` } };
 //   return config;
 // }
 
-export { postLogin, postSignUp, getProducts };
+export { postLogin, postSignUp, getProducts, getProductById };

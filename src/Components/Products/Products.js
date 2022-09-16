@@ -21,7 +21,7 @@ export default function Products() {
         console.log(err);
       }
     })();
-  }, []);
+  }, [setStorage]);
 
   const result = storage.filter(checkType);
 
@@ -38,9 +38,13 @@ export default function Products() {
         <h1>{productsFilter}</h1>
         <div className="filters">
           <div className="filters-buttons">
-            {filters.map((item) => {
+            {filters.map((item, index) => {
               return (
-                <Button title={item.toUpperCase()} state={setProductsFilter} />
+                <Button
+                  key={index}
+                  title={item.toUpperCase()}
+                  state={setProductsFilter}
+                />
               );
             })}
           </div>
@@ -52,9 +56,15 @@ export default function Products() {
           </p>
         </div>
         <div className="products-container">
-          {result.map((item) => {
+          {result.map((item, index) => {
             return (
-              <Product img={item.img} name={item.name} price={item.price} />
+              <Product
+                key={index}
+                id={item._id}
+                img={item.img}
+                name={item.name}
+                price={item.price}
+              />
             );
           })}
         </div>

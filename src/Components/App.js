@@ -10,7 +10,7 @@ import ProductDetails from "./Products/ProductDetails";
 
 export default function App() {
   const [token, setToken] = useState("");
-  const [cartQuantity, setCartQuantity] = useState([]);
+  const [cart, setCart] = useState([]);
   const [storage, setStorage] = useState([]);
 
   return (
@@ -20,10 +20,10 @@ export default function App() {
         value={{
           token,
           setToken,
-          cartQuantity,
-          setCartQuantity,
           storage,
           setStorage,
+          cart,
+          setCart,
         }}
       >
         <BrowserRouter>
@@ -31,7 +31,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<AuthScreen />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:nomeProduto" element={<ProductDetails />} />
+            <Route path="/products/:idProduto" element={<ProductDetails />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </BrowserRouter>
