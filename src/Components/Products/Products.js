@@ -5,6 +5,7 @@ import Button from "./Button.js";
 import { getProducts } from "../../services/plainstore.js";
 import Context from "../../Context/context.js";
 import Product from "./Product.js";
+import Footer from "../Footer/Footer.js";
 
 export default function Products() {
   const { storage, setStorage } = useContext(Context);
@@ -58,11 +59,13 @@ export default function Products() {
           })}
         </div>
       </Container>
+      <Footer />
     </>
   );
 }
 
 const Container = styled.main`
+  margin-top: 90px;
   h1 {
     text-align: center;
     font-size: 30px;

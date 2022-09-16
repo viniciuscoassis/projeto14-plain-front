@@ -68,10 +68,13 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: white;
   padding: 0 15px;
-  position: relative;
+  position: fixed;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
+  top: 0;
+  left: 0;
   .navbar {
     background-color: #060b26;
     height: 80px;
