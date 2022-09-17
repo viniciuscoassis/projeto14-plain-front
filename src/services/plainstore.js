@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let BASE_URL = "http://localhost:5000/";
+let BASE_URL = "https://back-project-plain.herokuapp.com/";
 
 function postSignUp(body) {
   let promisse = axios.post(`${BASE_URL}sign-up`, body);
