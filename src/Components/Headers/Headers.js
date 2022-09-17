@@ -10,6 +10,7 @@ import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
 import checkLogin from "./checkLogin";
+import WrapperCart from "./WrapperCart";
 
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
@@ -116,16 +117,10 @@ export default function Headers() {
           ) : (
             <>
               {cart.map((value) => (
-                <WrapperCart>
-                  <img src={value.element.img} />
-                  <div>
-                    <h2> {value.element.name}</h2>
-                    <h4>Tamanho: único</h4>
-                    <h1>{value.element.price.toFixed(2)}</h1>
-                    <h3>Quantidade: {value.itemQuantity}</h3>
-                  </div>
-                  <FaIcons.FaRegTrashAlt />
-                </WrapperCart>
+                <WrapperCart
+                  element={value.element}
+                  itemQuantity={value.itemQuantity}
+                ></WrapperCart>
               ))}
             </>
           )}
@@ -159,27 +154,6 @@ export default function Headers() {
     </Wrapper>
   );
 }
-const WrapperCart = styled.div`
-  width: 90vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-
-  img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-  }
-  h2 {
-    min-width: 160px;
-  }
-  div {
-    display: flex;
-    flex-direction: column;
-    min-width: 60vw;
-  }
-`;
 
 const InfoContainer = styled.div`
   width: 100%;
