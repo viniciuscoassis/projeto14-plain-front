@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -16,7 +16,9 @@ export default function Headers() {
   const [CartMenu, setCartMenu] = useState(false);
 
   const { cart } = useContext(Context);
-
+  useEffect(() => {
+    console.log(cart);
+  }, []);
   let user = checkLogin().user;
 
   const showCartMenu = () => setCartMenu(!CartMenu);
@@ -78,13 +80,19 @@ export default function Headers() {
           />
         </div>
         <ContainerFreeFrete>
-          <h2>{`faltam R$ ${valorParaFrete.toFixed(2)} para frete grátis`}</h2>
+          <h2>
+            {valorParaFrete < 0
+              ? "Você conseguiu frete grátis!"
+              : `faltam R$ ${valorParaFrete.toFixed(2)} para frete grátis`}
+          </h2>
           <div>
             <h3>R$0</h3>
             <div>
               {" "}
               <ProgressBar
-                completed={porcentagemParaFrete}
+                completed={
+                  porcentagemParaFrete > 100 ? 100 : porcentagemParaFrete
+                }
                 width="50vw"
                 height="15px"
                 labelSize="10px"
@@ -99,8 +107,28 @@ export default function Headers() {
         </ContainerFreeFrete>
 
         <CartContainer>
-          <h1>SEU CARRINHO ESTÁ VAZIO :(</h1>
-          <h3>CONTINUE COMPRANDO</h3>
+          {cart.length === 0 ? (
+            <>
+              {" "}
+              <h1>SEU CARRINHO ESTÁ VAZIO :(</h1>
+              <h3>CONTINUE COMPRANDO</h3>
+            </>
+          ) : (
+            <>
+              {cart.map((value) => (
+                <WrapperCart>
+                  <img src={value.element.img} />
+                  <div>
+                    <h2> {value.element.name}</h2>
+                    <h4>Tamanho: único</h4>
+                    <h1>{value.element.price.toFixed(2)}</h1>
+                    <h3>Quantidade: {value.itemQuantity}</h3>
+                  </div>
+                  <FaIcons.FaRegTrashAlt />
+                </WrapperCart>
+              ))}
+            </>
+          )}
         </CartContainer>
         <CupomContainer>
           {" "}
@@ -131,6 +159,28 @@ export default function Headers() {
     </Wrapper>
   );
 }
+const WrapperCart = styled.div`
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+  }
+  h2 {
+    min-width: 160px;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+    min-width: 60vw;
+  }
+`;
+
 const InfoContainer = styled.div`
   width: 100%;
   margin: 20px 0;
@@ -200,9 +250,12 @@ const CartContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  overflow-y: hidden;
+  min-height: 50vh;
+  max-height: 50vh;
   width: 100vw;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
+  position: sticky;
 
   h1 {
     color: grey;
@@ -277,12 +330,14 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
+    z-index: 1000;
   }
 
   .menu-bars {
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
+    z-index: 1000;
   }
 
   .nav-menu {
@@ -301,6 +356,7 @@ const Wrapper = styled.div`
   .nav-menu.active {
     left: 0;
     transition: 350ms;
+    z-index: 1000;
   }
 
   .nav-text {
@@ -310,6 +366,7 @@ const Wrapper = styled.div`
     padding: 8px 0px 8px 16px;
     list-style: none;
     height: 60px;
+    z-index: 1000;
   }
 
   .nav-text a {
@@ -330,6 +387,7 @@ const Wrapper = styled.div`
 
   .nav-menu-items {
     width: 100%;
+    z-index: 1000;
   }
 
   .navbar-toggle {
