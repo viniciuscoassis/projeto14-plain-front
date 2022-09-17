@@ -6,11 +6,13 @@
     "@ramonak/react-progress-bar": "^5.0.2",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "notiflix": "^3.2.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.4.0",
     "react-ionicons": "^4.2.0",
     "react-loader-spinner": "^5.3.4",
+    "react-progress-bar": "^0.1.0",
     "react-router-dom": "^6.4.0",
     "react-scripts": "^4.0.3",
     "styled-components": "^5.3.5"

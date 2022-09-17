@@ -13,6 +13,9 @@ export default function AuthScreen() {
     email: "",
     password: "",
     confirm_password: "",
+    img: "",
+    cep: "",
+    numero: "",
   };
 
   const emptyLogin = {
@@ -133,6 +136,27 @@ export default function AuthScreen() {
           name="confirm_password"
           value={signUpForm.confirm_password}
           placeholder="confirme sua senha"
+        ></input>
+        <input
+          onChange={handleForm2}
+          type="text"
+          name="img"
+          value={signUpForm.img}
+          placeholder="link da sua linda foto"
+        ></input>
+        <input
+          onChange={handleForm2}
+          type="text"
+          name="cep"
+          value={signUpForm.cep}
+          placeholder="digite seu CEP"
+        ></input>
+        <input
+          onChange={handleForm2}
+          type="text"
+          name="numero"
+          value={signUpForm.numero}
+          placeholder="digite número de celular"
         ></input>
         <TogglePasswordView
           passwordShown={passwordShown}

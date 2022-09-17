@@ -16,8 +16,7 @@ export default function ProfilePage() {
       <Wrapper>
         <div className="perfil">
           <div className="avatar">
-            {" "}
-            <FaUserCircle size={70} color="#979797" />
+            <img src={info.user.img} alt="profile-img" />
           </div>
           <div className="saudacao">
             <div>olá,</div>
@@ -72,5 +71,12 @@ const Wrapper = styled.div`
   }
   ul li {
     margin-bottom: 45px;
+  }
+  .avatar {
+    img {
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+    }
   }
 `;

@@ -7,6 +7,7 @@ import { useState } from "react";
 import Products from "./Products/Products";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import ProductDetails from "./Products/ProductDetails";
+import UserInfo from "./ProfilePage/UserInfo";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:idProduto" element={<ProductDetails />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/userinfo" element={<UserInfo />} />
           </Routes>
         </BrowserRouter>
       </Context.Provider>

@@ -43,5 +43,7 @@ const Container = styled.main`
   }
   img {
     margin-top: 11px;
+    width: 375px;
+    height: 452px;
   }
 `;

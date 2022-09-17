@@ -1,7 +1,7 @@
 export const arraySections = [
   {
     name: "Dados Pessoais",
-    route: "/profile/userinfo",
+    route: "/userinfo",
     function: () => {
       console.log("");
     },
