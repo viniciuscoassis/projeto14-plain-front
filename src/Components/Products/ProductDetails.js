@@ -88,8 +88,8 @@ export default function ProductDetails() {
             <div className="buy">
               <button
                 onClick={() => {
-                  navigate("/products");
                   setCart([...cart, { itemQuantity, element }]);
+                  navigate("/products");
                 }}
               >
                 ADICIONAR AO CARRINHO
@@ -120,6 +120,9 @@ const Container = styled.main`
     align-items: center;
     flex-direction: column;
     gap: 30px;
+  }
+  .first-session img {
+    object-fit: cover;
   }
   h1 {
     width: 90%;

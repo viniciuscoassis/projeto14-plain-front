@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import Headers from "../Headers/Headers";
-
-import { FaUserCircle } from "react-icons/fa";
 import checkLogin from "../Headers/checkLogin";
 import { arraySections } from "./arraySections";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +50,9 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 50px;
+  }
+  .perfil .avatar img {
+    object-fit: cover;
   }
 
   .perfil .saudacao {

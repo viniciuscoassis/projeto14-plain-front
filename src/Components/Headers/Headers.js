@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -15,11 +15,10 @@ import WrapperCart from "./WrapperCart";
 export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
   const [CartMenu, setCartMenu] = useState(false);
+  const [checkOut, setCheckOut] = useState(false);
 
   const { cart } = useContext(Context);
-  useEffect(() => {
-    console.log(cart);
-  }, []);
+
   let user = checkLogin().user;
 
   const showCartMenu = () => setCartMenu(!CartMenu);
@@ -33,6 +32,19 @@ export default function Headers() {
   const valFreteGratis = 299.9;
   let valorParaFrete = valFreteGratis - totalSum;
   let porcentagemParaFrete = Math.floor((totalSum / valFreteGratis) * 100);
+
+  function initiateCheckout(e) {
+    e.preventDefault();
+    if (!user) {
+      alert("logue-se por favor para finalizar seu carrinho");
+    }
+    setCheckOut(!checkOut);
+  }
+
+  function submitCupom(e) {
+    e.preventDefault();
+    alert("Este cupom não é mais válido");
+  }
 
   return (
     <Wrapper>
@@ -87,7 +99,7 @@ export default function Headers() {
               : `faltam R$ ${valorParaFrete.toFixed(2)} para frete grátis`}
           </h2>
           <div>
-            <h3>R$0</h3>
+            <h3>{`R$${totalSum}`}</h3>
             <div>
               {" "}
               <ProgressBar
@@ -125,7 +137,7 @@ export default function Headers() {
             </>
           )}
         </CartContainer>
-        <CupomContainer>
+        <CupomContainer onSubmit={submitCupom}>
           {" "}
           <label>CUPOM DE DESCONTO</label>
           <div>
@@ -133,6 +145,22 @@ export default function Headers() {
             <button>enviar</button>
           </div>
         </CupomContainer>
+        {cart.length === 0 ? (
+          ""
+        ) : (
+          <Total>
+            <div>
+              <h1>TOTAL</h1> <h2>R${totalSum.toFixed(2)}</h2>
+            </div>
+            <div>
+              <button onClick={initiateCheckout}>FINALIZAR COMPRA</button>
+              <h2 onClick={() => setCartMenu(!CartMenu)}>
+                CONTINUAR COMPRANDO
+              </h2>
+            </div>
+          </Total>
+        )}
+
         <InfoContainer>
           <p>(xx)xxxx-xxxx </p>
           <p>sac@plaincompany.com.br</p>
@@ -151,9 +179,134 @@ export default function Headers() {
           size={30}
         />
       </CartIcon>
+      {checkOut ? (
+        <CheckOut>
+          <div className="containerInfoCheckOut">
+            <h4 onClick={() => setCheckOut(!checkOut)}>X</h4>
+            <h1>RESUMO DO PEDIDO</h1>
+            <div className="containerSumUp">
+              {cart.map((value) => (
+                <>
+                  {" "}
+                  <div>
+                    <img src={value.element.img} />
+                    <h2>{value.element.name}</h2>
+                  </div>
+                </>
+              ))}
+            </div>
+            <button>FINALIZAR PEDIDO</button>
+            <h1>ENDEREÇO</h1>
+            <p>{user.cep}</p>
+          </div>
+        </CheckOut>
+      ) : (
+        ""
+      )}
     </Wrapper>
   );
 }
+const CheckOut = styled.div`
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .containerSumUp {
+    background-color: red;
+    height: 20vh;
+    width: 70vw;
+    margin-bottom: 10px;
+
+    div {
+      background-color: blue;
+      max-width: 20vw;
+      max-height: 100%;
+      margin-right: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    img {
+      width: 20vw;
+      height: 20vh;
+      object-fit: cover;
+    }
+  }
+
+  .containerInfoCheckOut {
+    background-color: white;
+    width: 80vw;
+    height: 70vh;
+    position: relative;
+    padding: 20px;
+
+    h1 {
+      font-weight: 700;
+    }
+
+    h4 {
+      font-weight: 800;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    button {
+      position: absolute;
+      bottom: 5vw;
+      right: 20vw;
+      height: 30px;
+      font-weight: 700;
+      border: none;
+      background-color: #228b22;
+      color: white;
+    }
+  }
+`;
+
+const Total = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 20vh;
+  align-items: center;
+  justify-content: space-around;
+  div:first-child {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  div:nth-child(2) {
+    display: flex;
+    height: 10vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    button {
+      width: 90vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      background-color: #1ba14e;
+      color: white;
+      height: 35px;
+      border: none;
+    }
+    h2 {
+      font-size: 12px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+  }
+`;
 
 const InfoContainer = styled.div`
   width: 100%;
@@ -222,14 +375,10 @@ const CupomContainer = styled.form`
 const CartContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-y: hidden;
-  min-height: 50vh;
-  max-height: 50vh;
+  overflow-y: scroll;
+  min-height: 40vh;
+  max-height: 40vh;
   width: 100vw;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
-  position: sticky;
 
   h1 {
     color: grey;
@@ -271,6 +420,7 @@ const Wrapper = styled.div`
   position: fixed;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
+  z-index: 1;
 
   .cart-menu {
     background-color: #ffffff;

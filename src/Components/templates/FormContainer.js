@@ -8,7 +8,6 @@ const Wrapper = styled.form`
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: -3;
 
   input {
     height: 40px;

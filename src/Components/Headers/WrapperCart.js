@@ -7,13 +7,13 @@ export default function WrapperCart({ element, itemQuantity }) {
   const { cart, setCart } = useContext(Context);
 
   function removeCart(id) {
-    let removido = cart.filter((value) => value.element._id != id);
+    let removido = cart.filter((value) => value.element._id !== id);
     setCart(removido);
   }
 
   return (
     <Wrapper>
-      <img src={element.img} />
+      <img src={element.img} alt="produto" />
       <div>
         <h2> {element.name}</h2>
         <h4>Tamanho: único</h4>
@@ -32,6 +32,11 @@ const Wrapper = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
 
+  h1 {
+    font-weight: 500;
+    color: black;
+  }
+
   img {
     width: 90px;
     height: 90px;
@@ -44,5 +49,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     min-width: 60vw;
+  }
+  h4 {
+    font-size: 13px;
+    margin: 5px 0;
   }
 `;

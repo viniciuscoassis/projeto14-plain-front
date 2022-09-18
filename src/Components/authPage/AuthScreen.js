@@ -182,6 +182,7 @@ export default function AuthScreen() {
 
 const Wrapper = styled.div`
   margin-top: 130px;
+
   h3 {
     font-size: 13px;
     text-align: center;

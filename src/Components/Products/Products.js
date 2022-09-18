@@ -32,7 +32,7 @@ export default function Products() {
     }
   }
   return (
-    <>
+    <Wrapper>
       <Headers />
       <Container>
         <h1>{productsFilter}</h1>
@@ -70,9 +70,12 @@ export default function Products() {
         </div>
       </Container>
       <Footer />
-    </>
+    </Wrapper>
   );
 }
+const Wrapper = styled.div`
+  position: relative;
+`;
 
 const Container = styled.main`
   margin-top: 120px;
