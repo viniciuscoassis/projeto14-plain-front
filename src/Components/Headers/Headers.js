@@ -21,6 +21,7 @@ export default function Headers() {
   const navigate = useNavigate();
 
   const { cart } = useContext(Context);
+<<<<<<< HEAD
   let { info, user } = checkLogin();
   let infoUser;
   if (info) {
@@ -28,6 +29,12 @@ export default function Headers() {
   }
 
   useEffect(() => console.log(user), []);
+=======
+  let { info } = checkLogin();
+  const infoUser = info.user;
+  let { user } = checkLogin();
+  console.log(user);
+>>>>>>> bee4c582178ad6dff7c906fe04bb6d9094befdf1
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
