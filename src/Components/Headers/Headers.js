@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import logo from "../../assets/img/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -16,10 +16,14 @@ export default function Headers() {
   const [sidebar, setSidebar] = useState(false);
   const [CartMenu, setCartMenu] = useState(false);
   const [checkOut, setCheckOut] = useState(false);
+  const [thanksMessage, setThanksMessage] = useState(false);
+
+  const navigate = useNavigate();
 
   const { cart } = useContext(Context);
-
-  let user = checkLogin().user;
+  let { info } = checkLogin();
+  const infoUser = info.user;
+  let { user } = checkLogin();
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
@@ -33,10 +37,16 @@ export default function Headers() {
   let valorParaFrete = valFreteGratis - totalSum;
   let porcentagemParaFrete = Math.floor((totalSum / valFreteGratis) * 100);
 
+  useEffect(() => {
+    console.log(infoUser);
+  }, []);
+
   function initiateCheckout(e) {
     e.preventDefault();
-    if (!user) {
+    if (user.title === "Login") {
       alert("logue-se por favor para finalizar seu carrinho");
+      navigate("/auth");
+      return;
     }
     setCheckOut(!checkOut);
   }
@@ -121,11 +131,11 @@ export default function Headers() {
 
         <CartContainer>
           {cart.length === 0 ? (
-            <>
+            <div className="emptyCart">
               {" "}
               <h1>SEU CARRINHO ESTÁ VAZIO :(</h1>
               <h3>CONTINUE COMPRANDO</h3>
-            </>
+            </div>
           ) : (
             <>
               {cart.map((value) => (
@@ -181,24 +191,45 @@ export default function Headers() {
       </CartIcon>
       {checkOut ? (
         <CheckOut>
-          <div className="containerInfoCheckOut">
-            <h4 onClick={() => setCheckOut(!checkOut)}>X</h4>
-            <h1>RESUMO DO PEDIDO</h1>
-            <div className="containerSumUp">
-              {cart.map((value) => (
-                <>
-                  {" "}
-                  <div>
-                    <img src={value.element.img} />
-                    <h2>{value.element.name}</h2>
-                  </div>
-                </>
-              ))}
+          {thanksMessage ? (
+            <div className="containerInfoCheckOut">
+              <div className="thanksMessage">
+                <h1>OBRIGADO PELO PEDIDO!!</h1>
+                <h2> A chave pix para o pagamento será enviada por email</h2>
+              </div>
+              <h4 onClick={() => setCheckOut(!checkOut)}>X</h4>
             </div>
-            <button>FINALIZAR PEDIDO</button>
-            <h1>ENDEREÇO</h1>
-            <p>{user.cep}</p>
-          </div>
+          ) : (
+            <div className="containerInfoCheckOut">
+              <h4 onClick={() => setCheckOut(!checkOut)}>X</h4>
+              <h1>RESUMO DO PEDIDO</h1>
+              <div className="containerSumUp">
+                {cart.map((value, index) => (
+                  <>
+                    {" "}
+                    <div key={index}>
+                      <img src={value.element.img} alt="item pedido" />
+                      <h2>{value.element.name}</h2>
+                    </div>
+                  </>
+                ))}
+              </div>
+              <button onClick={() => setThanksMessage(!thanksMessage)}>
+                FINALIZAR PEDIDO
+              </button>
+              <h1> ENTREGA:</h1>
+              <p>{`CEP: ${infoUser.cep}`}</p>
+
+              <h1>TELEFONE PARA CONTATO:</h1>
+              <p>{infoUser.numero}</p>
+
+              <h1>NOME DO DESTINATÁRIO:</h1>
+              <p>{infoUser.name}</p>
+
+              <h1>FORMA DE PAGAMENTO:</h1>
+              <p>modo unico: pix</p>
+            </div>
+          )}
         </CheckOut>
       ) : (
         ""
@@ -217,17 +248,35 @@ const CheckOut = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  .thanksMessage {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+    h1 {
+      font-size: 26px;
+      color: olive;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
   .containerSumUp {
-    background-color: red;
+    border: 1px solid lightgray;
     height: 20vh;
     width: 70vw;
     margin-bottom: 10px;
+    display: flex;
+    overflow-x: scroll;
 
     div {
-      background-color: blue;
       max-width: 20vw;
       max-height: 100%;
-      margin-right: 15px;
+      margin-right: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -238,6 +287,10 @@ const CheckOut = styled.div`
       height: 20vh;
       object-fit: cover;
     }
+    h2 {
+      font-size: 12px;
+      text-align: center;
+    }
   }
 
   .containerInfoCheckOut {
@@ -246,9 +299,13 @@ const CheckOut = styled.div`
     height: 70vh;
     position: relative;
     padding: 20px;
+    overflow-y: scroll;
 
     h1 {
       font-weight: 700;
+    }
+    p {
+      margin-bottom: 25px;
     }
 
     h4 {
@@ -380,6 +437,15 @@ const CartContainer = styled.div`
   max-height: 40vh;
   width: 100vw;
 
+  .emptyCart {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   h1 {
     color: grey;
     font-weight: 600;
@@ -421,6 +487,7 @@ const Wrapper = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
   margin-bottom: 30px;
   z-index: 1;
+  overflow-y: scroll;
 
   .cart-menu {
     background-color: #ffffff;
