@@ -2,22 +2,20 @@ export const arraySections = [
   {
     name: "Dados Pessoais",
     route: "/userinfo",
-    function: () => {
-      console.log("");
-    },
+    function: () => {},
   },
   {
     name: "Endereços",
     route: "/",
     function: () => {
-      console.log("");
+      alert("Função ainda não disponível");
     },
   },
   {
     name: "Pedidos",
     route: "/",
     function: () => {
-      console.log("");
+      alert("Função ainda não disponível");
     },
   },
   {

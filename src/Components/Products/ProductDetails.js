@@ -87,10 +87,14 @@ export default function ProductDetails() {
             </div>
             <div className="buy">
               <button
-                onClick={() => {
-                  setCart([...cart, { itemQuantity, element }]);
-                  navigate("/products");
-                }}
+                onClick={
+                  itemQuantity > 0
+                    ? () => {
+                        setCart([...cart, { itemQuantity, element }]);
+                        navigate("/products");
+                      }
+                    : () => alert("Escolha uma quantidade válida")
+                }
               >
                 ADICIONAR AO CARRINHO
               </button>

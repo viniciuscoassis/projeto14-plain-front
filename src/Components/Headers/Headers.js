@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -36,10 +36,6 @@ export default function Headers() {
   const valFreteGratis = 299.9;
   let valorParaFrete = valFreteGratis - totalSum;
   let porcentagemParaFrete = Math.floor((totalSum / valFreteGratis) * 100);
-
-  useEffect(() => {
-    console.log(infoUser);
-  }, []);
 
   function initiateCheckout(e) {
     e.preventDefault();
@@ -197,7 +193,13 @@ export default function Headers() {
                 <h1>OBRIGADO PELO PEDIDO!!</h1>
                 <h2> A chave pix para o pagamento será enviada por email</h2>
               </div>
-              <h4 onClick={() => setCheckOut(!checkOut)}>X</h4>
+              <h4
+                onClick={() => {
+                  setCheckOut(!checkOut);
+                }}
+              >
+                X
+              </h4>
             </div>
           ) : (
             <div className="containerInfoCheckOut">
@@ -228,6 +230,19 @@ export default function Headers() {
 
               <h1>FORMA DE PAGAMENTO:</h1>
               <p>modo unico: pix</p>
+
+              <h1>VALOR DA COMPRA:</h1>
+              <p>{`${totalSum.toFixed(2)} + ${
+                valorParaFrete > 0
+                  ? "R$ 20,00 de frete"
+                  : "0 (Você conseguiu frete grátis)"
+              }`}</p>
+              <h1>VALOR TOTAL:</h1>
+              <p>{`R$${
+                valorParaFrete > 0
+                  ? (totalSum + 20).toFixed(2)
+                  : totalSum.toFixed(2)
+              }`}</p>
             </div>
           )}
         </CheckOut>
@@ -248,6 +263,7 @@ const CheckOut = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   .thanksMessage {
     display: flex;
     flex-direction: column;
@@ -296,10 +312,12 @@ const CheckOut = styled.div`
   .containerInfoCheckOut {
     background-color: white;
     width: 80vw;
-    height: 70vh;
+    height: 90vh;
     position: relative;
     padding: 20px;
     overflow-y: scroll;
+
+    padding-bottom: 20px;
 
     h1 {
       font-weight: 700;
@@ -316,8 +334,8 @@ const CheckOut = styled.div`
     }
     button {
       position: absolute;
-      bottom: 5vw;
-      right: 20vw;
+      bottom: 5px;
+      right: 78px;
       height: 30px;
       font-weight: 700;
       border: none;

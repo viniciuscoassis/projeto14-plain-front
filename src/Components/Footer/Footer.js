@@ -18,7 +18,7 @@ export default function Footer() {
 }
 
 const Container = styled.footer`
-  margin-top: 6px;
+  margin-top: 30px;
   height: 80px;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,10 @@ const Container = styled.footer`
   .social {
     display: flex;
     gap: 50px;
+  }
+  .social img {
+    width: 30px;
+    height: 30px;
   }
   p {
     font-size: 12px;
