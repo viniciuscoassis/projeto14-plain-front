@@ -5,7 +5,7 @@ import * as AiIcons from "react-icons/ai";
 import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import Context from "../../Context/context.js";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { SideBarData } from "./Sidebar";
 
 import ProgressBar from "@ramonak/react-progress-bar";
@@ -21,8 +21,13 @@ export default function Headers() {
   const navigate = useNavigate();
 
   const { cart } = useContext(Context);
-  let { info } = checkLogin();
-  const infoUser = info.user;
+  let { info, user } = checkLogin();
+  let infoUser;
+  if (info) {
+    infoUser = info.user;
+  }
+
+  useEffect(() => console.log(user), []);
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
@@ -38,7 +43,7 @@ export default function Headers() {
 
   function initiateCheckout(e) {
     e.preventDefault();
-    if (infoUser.title === "Login") {
+    if (user.title === "Login") {
       alert("logue-se por favor para finalizar seu carrinho");
       navigate("/auth");
       return;
@@ -69,9 +74,9 @@ export default function Headers() {
             </div>
           </li>
           <li className="nav-text">
-            <Link to={infoUser.path}>
+            <Link to={user.path}>
               <FaIcons.FaUserAlt />
-              <span>{infoUser.title}</span>
+              <span>{user.title}</span>
             </Link>
           </li>
           {SideBarData.map((item, index) => {
@@ -184,9 +189,9 @@ export default function Headers() {
           size={30}
         />
       </CartIcon>
-      {checkOut ? (
+      {info && checkOut ? (
         <CheckOut>
-          {thanksMessage ? (
+          {thanksMessage && info ? (
             <div className="containerInfoCheckOut">
               <div className="thanksMessage">
                 <h1>OBRIGADO PELO PEDIDO!!</h1>
