@@ -27,8 +27,6 @@ export default function Headers() {
     infoUser = info.user;
   }
 
-  useEffect(() => console.log(user), []);
-
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
 
