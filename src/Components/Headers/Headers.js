@@ -23,7 +23,6 @@ export default function Headers() {
   const { cart } = useContext(Context);
   let { info } = checkLogin();
   const infoUser = info.user;
-  let { user } = checkLogin();
 
   const showCartMenu = () => setCartMenu(!CartMenu);
   const showSidebar = () => setSidebar(!sidebar);
@@ -39,7 +38,7 @@ export default function Headers() {
 
   function initiateCheckout(e) {
     e.preventDefault();
-    if (user.title === "Login") {
+    if (infoUser.title === "Login") {
       alert("logue-se por favor para finalizar seu carrinho");
       navigate("/auth");
       return;
@@ -70,9 +69,9 @@ export default function Headers() {
             </div>
           </li>
           <li className="nav-text">
-            <Link to={user.path}>
+            <Link to={infoUser.path}>
               <FaIcons.FaUserAlt />
-              <span>{user.title}</span>
+              <span>{infoUser.title}</span>
             </Link>
           </li>
           {SideBarData.map((item, index) => {
